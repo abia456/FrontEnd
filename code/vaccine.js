@@ -10,6 +10,12 @@ router.get('/', function(req,res){
 	res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+//	Req Appointment
+router.get('/ReqApp', function(req,res){
+	
+	res.sendFile(path.join(__dirname+'/ReqApp.html'));
+});
+
 
 //	Add Stock
 router.get('/addStock.html', function(req,res){
