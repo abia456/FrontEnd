@@ -1,7 +1,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Form</title>
+    <title>Application Form</title>
     <link rel="stylesheet" href="StyleSheet2.css">
     <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
 <body>
@@ -19,23 +19,23 @@
       <input type="text" id="age" name="user_age">
       <label for="cnic">CNIC number:</label>
       <input type="cnic_num" id="age" name="cnic_num">
+      <label for="vaccination_centre">Select Vaccination Centre:</label>
+      <select id="vaccination_centre" name="vaccination_centre">
+        
+          <option value="qaddafi">Qaddafi Stadium</option>
+          <option value="expo">Expo Centre</option>
+       
+        
+        
+      </select>
       
-     
+      <button type="submit">Submit</button>
     </fieldset>
-    <fieldset>
-    <label for="vaccination_centre">Select Vaccination Centre (Centre ID):</label>
-    <select id="vaccination_centre" name="vaccination_centre">
-      
-        <option value="qaddafi">1</option>
-        <option value="expo">2</option>
-     
-      
-      
-    </select>
+
+ 
+
 
     
-    </fieldset>
-    <button type="submit">Submit</button>
   </form>
   
 </body>
