@@ -23,4 +23,5 @@ router.get('/addStock.html', function(req,res){
 	res.sendFile(path.join(__dirname+'/addStock.html'));
 });
 
+
 module.exports = router ;
