@@ -7,6 +7,18 @@
   body {
     font-family: 'Nunito', sans-serif;
     color: #384047;
+
+    
+  background-image: url("wallpaaper.jpg") ;
+  background-size: cover; /* or contain depending on what you want */
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  width: 1200px;
+  height:600px;
+  text-align:center;
+  margin:auto;
+  padding:0;
   }
   
   form {
