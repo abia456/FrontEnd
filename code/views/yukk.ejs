@@ -1,0 +1,30 @@
+<html>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Form</title>
+    <link rel="stylesheet" href="StyleSheet2.css">
+    <link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+<body>
+
+
+  <form action="/ViewVacApp" method="post">
+  
+    <h1>List of Appointments</h1>
+    <% centerLoc.forEach(function(docList){ %>
+      <fieldset>
+        <h3>Patient ID: </h3><%= docList.userID %>
+        <h3>Dose Number: </h3><%= docList.dose_number %>
+        
+        
+       
+      </fieldset>
+
+      
+  <% }); %>
+    
+
+  </form>
+  
+
+</body>
+</html>

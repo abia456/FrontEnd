@@ -82,23 +82,24 @@ router.post('/ViewVacApp', function (req, res) {
   //console.log(req.body)
   
   console.log(req.body.vac_id)
-  con.query('select * from vaccine_center where centerID = ?',        
+  con.query('select * from vaccine_appointment where centerID = ?' ,       
   req.body.vac_id, function(err, result, fields) {
     if (err) {
         return console.log(err);
     }
-     
-    console.log('about to render yukk')
-    res.redirect ('/yukk');
+    
+    console.log(result[1])
+    //res.redirect('/?valid=' + result);
+    return res.render ('yukk.ejs', {centerLoc:result});
     //return console.log(result);
-
-
     
 });
 
 
   //res.redirect('/success')
 })
+
+
 //	Add Stock
 router.get('/addStock.html', function(req,res){
 	

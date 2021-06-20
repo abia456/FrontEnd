@@ -4,6 +4,7 @@ const path = require('path');
 
 
 const app = express();
+app.set('view engine', 'ejs');
 const http = require("http").createServer(app);
 
 var bodyParser = require("body-parser");
@@ -17,6 +18,8 @@ app.use(express.static('public'));
 
 let vaccine = require('./vaccine');
 app.use('/',vaccine);
+
+
 
 http.listen(8000, function(){
 	
