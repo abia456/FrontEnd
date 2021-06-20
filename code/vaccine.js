@@ -6,13 +6,13 @@ const html = require('html');
 var mysql = require('mysql2');
 
 
-var con = mysql.createConnection({
+/*var con = mysql.createConnection({
   host: "localhost",
   user: "abianoor456",
   password: "abiasql123456",
   
   database: 'cloudproject'
-});
+});*/
 
 /*var con = mysql.createConnection({
   username: process.env.DB_USERNAME || 'abianoor456',
@@ -20,6 +20,13 @@ var con = mysql.createConnection({
   host: process.env.DB_HOST || 'localhost',
   database: 'cloudproject'
 });*/
+
+var con = mysql.createConnection({
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: 'cloudproject'
+});
 
 con.connect(function(err) {
   if (err) throw err;
