@@ -7,9 +7,10 @@ var mysql = require('mysql2');
 
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "abianoor456",
-  password: "abiasql123456",
+  host: "127.0.0.1",
+  user: "root",
+  password: "amnabhatti",
+  charset : 'utf8mb4',
   database: 'cloudproject'
 });
 
@@ -31,7 +32,7 @@ con.query('select * from users', function(err, result, fields) {
     return console.log(result);
 });
 
-//	register
+//  get main page
 router.get('/', function(req,res){
 	
 	res.sendFile(path.join(__dirname+'/index.html'));
