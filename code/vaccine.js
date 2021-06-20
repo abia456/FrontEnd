@@ -55,20 +55,19 @@ router.post('/ReqPost', function(req,res){
 	console.log('ReqPost');
 	console.log(req.body.user_name);
 	console.log(req.body.user_age);
-
-	//var sql = "INSERT INTO users (userName, userAge) VALUES (" + req.user_name +',' + req.user_age + ")";
 	
-	var sql = "INSERT INTO users(userID,userName,userAge) VALUES (?,?,?)";
-  con.query(sql, [11,req.body.user_name, req.body.user_age], function (err, result) {
+	var sql = "INSERT INTO users(userName,userAge) VALUES (?,?)";
+  con.query(sql, [req.body.user_name, req.body.user_age], function (err, result) {
     if (err) throw err;
-	user_id = result.insertId;
+	  user_id = result.insertId;
     console.log("1 record inserted, ID: " + result.insertId);
-	console.log("Addimg into appintments table");
+	  console.log("Addimg into appintments table");
 	
   var sql2 = "INSERT INTO vaccine_appointment (userID, centerID, dose_number) VALUES ( ?,?,?)";
-    con.query(sql2, [user_id ,  req.body.vaccination_centre , 1], function (err, result) {
+    con.query(sql2, [user_id ,  req.body.vaccination_centre , req.body.dose_num], function (err, result) {
     if (err) throw err;
     console.log("1 record inserted, ID: " + result.insertId);
+   
 	res.sendFile(path.join(__dirname+'/index.html'));
 	
 
@@ -77,7 +76,6 @@ router.post('/ReqPost', function(req,res){
 	//res.sendFile(path.join(__dirname+'/ReqApp.html'));
 });
 });
-
 
 router.post('/ViewVacApp', function (req, res) {
   //console.log(req.body)
@@ -88,7 +86,7 @@ router.post('/ViewVacApp', function (req, res) {
     if (err) {
         return console.log(err);
     }
-    
+     
     console.log('about to render yukk')
     res.redirect ('/yukk');
     //return console.log(result);
@@ -110,21 +108,84 @@ router.get('/addStock.html', function(req,res){
 router.post('/addStock', function(req,res){
 	
 	console.log('AddStock Post');
-	
+	var exists=0;
 	con.connect(function(err) {
 		if (err) throw err;
 		console.log("Vac amount= "+ req.body.Vacc_Amount);
-		var sql = "UPDATE vaccine_stock SET stockCount = ? WHERE vaccineName = 'pakVac' AND centerID='2'";
+    console.log("Vac amount= "+ req.body.user_job);
+    console.log("Vac amount= "+ req.body.Vaccine_name);
+
+    con.query('select * from vaccine_stock WHERE vaccineName = ? AND centerID=?',        
+  [req.body.Vaccine_name,req.body.user_job], function(err, result, fields) {
+    if (err) {
+        return console.log(err);
+    }
+    console.log(result);
+
+    //not an already existing record
+    if(result.length<1){
+      console.log("lenght=0");
+      exists=0;
+      
+    console.log("Inserting");
+
+    var sql4 = "select * from vaccines WHERE vaccineName = ?";
+    con.query(sql4, req.body.Vaccine_name, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted, ID: " + result.insertId);
+
+      if(result.length<1) //vaccine does not exist in vaccine
+      {
+        var sql1 = "INSERT INTO vaccines (vaccineName, minAge, WeeksBetweenDoses,numberOfDoses) VALUES ( ?,?,?,?)";
+        con.query(sql1, [req.body.Vaccine_name,'18','20','2'], function (err, result) {
+        if (err) throw err;
+        console.log("1 record inserted, ID: " + result.insertId);
+      });
+      }
+
+    });
+ 
+
+    var sql2 = "INSERT INTO vaccine_stock (stockCount, vaccineName, centerID) VALUES ( ?,?,?)";
+    con.query(sql2, [req.body.Vacc_Amount,req.body.Vaccine_name,req.body.user_job], function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted, ID: " + result.insertId);
+	res.sendFile(path.join(__dirname+'/index.html'));
+	
+
+	});
+
+
+
+    } 
+    else{
+      
+      exists=1;
+      console.log("lenght= "+ exists);
+
+      console.log("UPDATING");
+
+		var sql = "UPDATE vaccine_stock SET stockCount = ? WHERE vaccineName = ? AND centerID=?";
 		
 		con.query(sql,        
-  req.body.Vacc_Amount, function(err, result, fields) {
+    [req.body.Vacc_Amount,req.body.Vaccine_name,req.body.user_job], function(err, result, fields) 
+    {
     if (err) {
         return console.log(err);
     }
     return console.log(result);
-});
+    });
+    }
 
+  });
 
+  if(exists==0)
+  {
+  }
+  else{
+    
+
+  } 
 	  });
 
   
