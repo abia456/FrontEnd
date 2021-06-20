@@ -7,10 +7,10 @@ var mysql = require('mysql2');
 
 
 var con = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "amnabhatti",
-  charset : 'utf8mb4',
+  host: "localhost",
+  user: "abianoor456",
+  password: "abiasql123456",
+  
   database: 'cloudproject'
 });
 
