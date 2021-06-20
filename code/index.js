@@ -5,6 +5,12 @@ const path = require('path');
 
 const app = express();
 const http = require("http").createServer(app);
+
+var bodyParser = require("body-parser");
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+// parse application/json
+app.use(bodyParser.json());
 //Static folder, public foldeer
 app.use(express.static('public'));
 
@@ -16,4 +22,3 @@ http.listen(8000, function(){
 	
 	console.log('Server started');
 });
-
