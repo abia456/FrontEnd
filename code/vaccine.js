@@ -6,10 +6,17 @@ const html = require('html');
 var mysql = require('mysql2');
 
 
+/*var con = mysql.createConnection({
+  host: "localhost",
+  user: "abianoor456",
+  password: "abiasql123456",
+  database: 'cloudproject'
+});*/
+
 var con = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "root",
-  password: "123456",
+  username: process.env.DB_USERNAME || 'abianoor456',
+  password: process.env.DB_PASSWORD || 'abiasql123456',
+  host: process.env.DB_HOST || 'localhost',
   database: 'cloudproject'
 });
 
@@ -42,6 +49,8 @@ router.get('/ViewVacApp', function(req,res){
 	res.sendFile(path.join(__dirname+'/ViewVacApp.html'));
 });
 
+
+
 router.post('/ViewVacApp', function (req, res) {
   //console.log(req.body)
   
@@ -68,6 +77,33 @@ router.get('/addStock.html', function(req,res){
 	
 	res.sendFile(path.join(__dirname+'/addStock.html'));
 });
+
+//Post Stock
+router.post('/addStock', function(req,res){
+	
+	console.log('AddStock Post');
+	
+	con.connect(function(err) {
+		if (err) throw err;
+		console.log("Vac amount= "+ req.body.Vacc_Amount);
+		var sql = "UPDATE vaccine_stock SET stockCount = ? WHERE vaccineName = 'pakVac' AND centerID='2'";
+		
+		con.query(sql,        
+  req.body.Vacc_Amount, function(err, result, fields) {
+    if (err) {
+        return console.log(err);
+    }
+    return console.log(result);
+});
+
+
+	  });
+
+  
+    res.sendFile(path.join(__dirname+'/index.html'));
+
+});
+
 
 
 module.exports = router ;
