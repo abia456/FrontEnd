@@ -7,9 +7,10 @@ var mysql = require('mysql2');
 
 
 var con = mysql.createConnection({
-  host: "localhost",
-  user: "abianoor456",
-  password: "abiasql123456",
+  host: "127.0.0.1",
+  user: "root",
+  password: "amnabhatti",
+  charset : 'utf8mb4',
   database: 'cloudproject'
 });
 
@@ -31,7 +32,7 @@ con.query('select * from users', function(err, result, fields) {
     return console.log(result);
 });
 
-//	register
+//  get main page
 router.get('/', function(req,res){
 	
 	res.sendFile(path.join(__dirname+'/index.html'));
@@ -55,18 +56,16 @@ router.post('/ReqPost', function(req,res){
 	console.log('ReqPost');
 	console.log(req.body.user_name);
 	console.log(req.body.user_age);
-
-	//var sql = "INSERT INTO users (userName, userAge) VALUES (" + req.user_name +',' + req.user_age + ")";
 	
-	var sql = "INSERT INTO users(userID,userName,userAge) VALUES (?,?,?)";
-  con.query(sql, [11,req.body.user_name, req.body.user_age], function (err, result) {
+	var sql = "INSERT INTO users(userName,userAge) VALUES (?,?)";
+  con.query(sql, [req.body.user_name, req.body.user_age], function (err, result) {
     if (err) throw err;
-	user_id = result.insertId;
+	  user_id = result.insertId;
     console.log("1 record inserted, ID: " + result.insertId);
-	console.log("Addimg into appintments table");
+	  console.log("Addimg into appintments table");
 	
   var sql2 = "INSERT INTO vaccine_appointment (userID, centerID, dose_number) VALUES ( ?,?,?)";
-    con.query(sql2, [user_id ,  req.body.vaccination_centre , 1], function (err, result) {
+    con.query(sql2, [user_id ,  req.body.vaccination_centre , req.body.dose_num], function (err, result) {
     if (err) throw err;
     console.log("1 record inserted, ID: " + result.insertId);
 	res.sendFile(path.join(__dirname+'/index.html'));
